@@ -5,6 +5,8 @@
 //  Created by anxindeli on 2017/7/26.
 //  Copyright © 2017年 anxindeli. All rights reserved.
 //
+#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width //当前屏幕宽度
+#define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height //当前屏幕高度
 
 #import "XZFTableView.h"
 @interface XZFTableView ()
