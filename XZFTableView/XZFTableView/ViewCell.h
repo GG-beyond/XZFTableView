@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewCell : UIControl
+@interface ViewCell : UIView
 @property (nonatomic, strong) NSString *indentifier;
-
+@property (nonatomic, strong) UIView *selectedBackgroundView;//cell选中时的view
+@property (nonatomic, getter=isSelected) BOOL selected;//选中
+@property (nonatomic, getter=isHighlighted) BOOL highlighted; //高亮
+@property (nonatomic, assign) CGSize viewSize;
 - (id)initWithIndentifier:(NSString *)indentifier;
 @end

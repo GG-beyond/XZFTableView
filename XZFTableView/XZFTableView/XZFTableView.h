@@ -34,7 +34,6 @@ typedef enum ScrollDirection {
  */
 - (CGSize)tableView:(XZFTableView *)tableView;
 - (void)tableView:(XZFTableView *)tableView didSelectRowAtIndex:(NSInteger)index;//选中
-- (void)tableView:(XZFTableView *)tableView didDeselectRowAtIndex:(NSInteger)index;//取消选中
 
 @end
 @interface XZFTableView : UIScrollView<UIScrollViewDelegate>

@@ -48,6 +48,10 @@
     return CGSizeMake(44, CGRectGetHeight(self.tableView.frame));
     
 }
+- (void)tableView:(XZFTableView *)tableView didSelectRowAtIndex:(NSInteger)index{
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

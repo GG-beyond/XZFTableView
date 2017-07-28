@@ -13,6 +13,9 @@
     if (self = [super initWithIndentifier:indentifier]) {
         [self addSubview:self.appName];
         [self creatLine];
+        UIView *bgView = [[UIView alloc] init];
+        bgView.backgroundColor = [UIColor blueColor];
+        self.selectedBackgroundView = bgView;
     }
     return self;
 }

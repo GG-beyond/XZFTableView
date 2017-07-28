@@ -14,7 +14,6 @@
     CGFloat currentContent_x;
     NSInteger visibleCount;
     CGSize viewSize;
-    
     NSInteger allCount;
 
 }
@@ -28,12 +27,22 @@
         self.showsVerticalScrollIndicator=NO;
         self.directionalLockEnabled = YES;
         self.delegate = self;
+        self.delaysContentTouches = NO;
+        self.canCancelContentTouches = YES;
         self.backgroundColor = [UIColor blueColor];
         self.visibleViewCells = [NSMutableArray array];
         self.reuseableViewCells = [NSMutableSet set];
         
     }
     return self;
+}
+- (BOOL)touchesShouldCancelInContentView:(UIView *)view {
+    
+    if ([view isKindOfClass:[UIControl class]]) {
+        return YES;
+    }
+    return [super touchesShouldCancelInContentView:view];
+    
 }
 - (void)addReuseItem:(ViewCell *)cell {
     
@@ -80,10 +89,11 @@
 
         for (int i=0; i<visibleCount; i++) {
             
-            UIView *cell = [self.xzfDataSource xzfTableview:self cellForRowAtIndex:i];
+            ViewCell *cell = [self.xzfDataSource xzfTableview:self cellForRowAtIndex:i];
             [self addSubview:cell];
             [self.visibleViewCells addObject:cell];
             cell.tag = i;
+            cell.viewSize = viewSize;
             cell.frame = CGRectMake(i*viewSize.width, 0, viewSize.width, viewSize.height);
             if (self.xzfDataSource&&[self.xzfDataSource respondsToSelector:@selector(xzfTableview:cellForRowAtIndex:)]) {
                 [self.xzfDataSource xzfTableview:self cellForRowAtIndex:i];
@@ -91,7 +101,7 @@
         }
     }else{
         
-        for (UIView *cell in self.visibleViewCells) {
+        for (ViewCell *cell in self.visibleViewCells) {
 
             if (self.xzfDataSource&&[self.xzfDataSource respondsToSelector:@selector(xzfTableview:cellForRowAtIndex:)]) {
                 [self.xzfDataSource xzfTableview:self cellForRowAtIndex:cell.tag];
@@ -104,7 +114,6 @@
     
     
     [self setContentOffset:CGPointMake(viewSize.width*index, 0) animated:animated];
-    
     
 }
 #pragma mark - UISCrollViewDelegate
@@ -177,6 +186,8 @@
     ViewCell *cell = [self.xzfDataSource xzfTableview:self cellForRowAtIndex:nextTag];
     cell.tag = nextTag;
     cell.frame = CGRectMake(nextTag * viewSize.width, 0, viewSize.width, viewSize.height);
+    cell.viewSize = viewSize;
+
     //
     if (![self.subviews containsObject:cell]) {
         [self addSubview:cell];

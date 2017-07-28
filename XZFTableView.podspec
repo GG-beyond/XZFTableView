@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/GG-beyond/XZFTableView.git", :tag => "0.0.1" }
  
 
-  s.source_files  = "XZFTableView/XZFTableView/*.{h,m}"
+  s.source_files  = "XZFTableView/*.{h,m}"
   s.exclude_files = "Classes/Exclude"
 
 
