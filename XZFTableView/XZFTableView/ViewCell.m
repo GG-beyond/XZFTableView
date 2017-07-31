@@ -13,7 +13,9 @@
 
 @end
 @implementation ViewCell
-
+- (void)layoutSubviews{
+    
+}
 - (id)initWithIndentifier:(NSString *)indentifier{
     if (self=[super init]) {
         _indentifier = indentifier;
@@ -27,11 +29,9 @@
 - (UIButton *)bgControl{
     
     if (!_bgControl) {
+        
         _bgControl = [[UIButton alloc] initWithFrame:self.bounds];
         [_bgControl addTarget:self action:@selector(doSelect:) forControlEvents:UIControlEventTouchUpInside];
-//        UIImage *image = [self createImageWithBgColor:defalutColor size:self.bounds.size];
-//        [_bgControl setImage:image forState:UIControlStateHighlighted];
-//        [_bgControl setImage:image forState:UIControlStateSelected];
 
     }
     return _bgControl;
@@ -54,7 +54,7 @@
     self.bgControl.frame = CGRectMake(0, 0, viewSize.width, viewSize.height);
     UIImage *image = [self createImageWithBgColor:_defalutColor size:_bgControl.bounds.size ];
     [_bgControl setImage:image forState:UIControlStateHighlighted];
-//    [_bgControl setImage:image forState:UIControlStateSelected];
+    [_bgControl setImage:image forState:UIControlStateSelected];
 
 }
 - (void)setSelected:(BOOL)selected{
@@ -79,5 +79,8 @@
 }
 - (void)doSelect:(UIButton *)sender{
     NSLog(@"%ld",self.tag);
+    if (self.cellDelegate && [self.cellDelegate respondsToSelector:@selector(selectCurrentCell:)]) {
+        [self.cellDelegate selectCurrentCell:sender.tag];
+    }
 }
 @end

@@ -16,6 +16,7 @@
 		7E7FC75E1F2873C4003917EA /* XZFTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E7FC75D1F2873C4003917EA /* XZFTableView.m */; };
 		7E7FC7621F288DF1003917EA /* ViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E7FC7611F288DF1003917EA /* ViewCell.m */; };
 		7E7FC7651F29FAC1003917EA /* MyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E7FC7641F29FAC1003917EA /* MyTableViewCell.m */; };
+		7E7FC76E1F2F0306003917EA /* weather.json in Resources */ = {isa = PBXBuildFile; fileRef = 7E7FC76D1F2F0306003917EA /* weather.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		7E7FC7611F288DF1003917EA /* ViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewCell.m; sourceTree = "<group>"; };
 		7E7FC7631F29FAC1003917EA /* MyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTableViewCell.h; sourceTree = "<group>"; };
 		7E7FC7641F29FAC1003917EA /* MyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableViewCell.m; sourceTree = "<group>"; };
+		7E7FC76D1F2F0306003917EA /* weather.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = weather.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +77,7 @@
 				7E7FC7631F29FAC1003917EA /* MyTableViewCell.h */,
 				7E7FC7641F29FAC1003917EA /* MyTableViewCell.m */,
 				7E7FC75F1F287D06003917EA /* PrefixHeader.pch */,
+				7E7FC76D1F2F0306003917EA /* weather.json */,
 				7E7FC75B1F2873A9003917EA /* XZFTableView */,
 				7E7FC74D1F287387003917EA /* Main.storyboard */,
 				7E7FC7501F287387003917EA /* Assets.xcassets */,
@@ -165,6 +168,7 @@
 			files = (
 				7E7FC7541F287387003917EA /* LaunchScreen.storyboard in Resources */,
 				7E7FC7511F287387003917EA /* Assets.xcassets in Resources */,
+				7E7FC76E1F2F0306003917EA /* weather.json in Resources */,
 				7E7FC74F1F287387003917EA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

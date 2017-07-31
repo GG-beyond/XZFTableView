@@ -5,11 +5,9 @@
 //  Created by anxindeli on 2017/7/26.
 //  Copyright © 2017年 anxindeli. All rights reserved.
 //
-#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width //当前屏幕宽度
-#define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height //当前屏幕高度
 
 #import "XZFTableView.h"
-@interface XZFTableView ()
+@interface XZFTableView ()<CellDelegate>
 {
     CGFloat currentContent_x;
     NSInteger visibleCount;
@@ -93,11 +91,10 @@
             [self addSubview:cell];
             [self.visibleViewCells addObject:cell];
             cell.tag = i;
+            cell.cellDelegate = self;
             cell.viewSize = viewSize;
             cell.frame = CGRectMake(i*viewSize.width, 0, viewSize.width, viewSize.height);
-            if (self.xzfDataSource&&[self.xzfDataSource respondsToSelector:@selector(xzfTableview:cellForRowAtIndex:)]) {
-                [self.xzfDataSource xzfTableview:self cellForRowAtIndex:i];
-            }
+            
         }
     }else{
         
@@ -119,7 +116,13 @@
 #pragma mark - UISCrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
+    //移动
+    if (self.xzfDelegate && [self.xzfDelegate respondsToSelector:@selector(xzfTableViewDidScroll:)]) {
+        [self.xzfDelegate xzfTableViewDidScroll:self];
+    }
+
     if (scrollView.contentOffset.x<=0||scrollView.contentOffset.x>=scrollView.contentSize.width-SCREEN_WIDTH) {
+        
         return;
     }
 
@@ -131,7 +134,6 @@
     [self editItemFrame:self.sDirection withOffSex:scrollView.contentOffset.x];
 
     currentContent_x = scrollView.contentOffset.x;
-
     
 }
 - (void)editItemFrame:(ScrollDirection)direction withOffSex:(CGFloat )offSet{
@@ -144,7 +146,7 @@
     CGFloat lastMaxXOffSet = CGRectGetMaxX(lastCell.frame);
 
     CGFloat topMaxXOffSet = CGRectGetMaxX(topCell.frame);
-    CGFloat topMinXOffSet = CGRectGetMidX(topCell.frame);
+    CGFloat topMinXOffSet = CGRectGetMinX(topCell.frame);
 
 
     NSInteger nextTag = 0;
@@ -155,9 +157,9 @@
             [self.visibleViewCells removeObject:lastCell];
             
             while (nextTag > -1) {
-                [self hhh:nextTag];
+                [self getReuseCell:nextTag];
                 nextTag--;
-                if (topMinXOffSet >offSet + SCREEN_WIDTH) {
+                if (topMinXOffSet >offSet - SCREEN_WIDTH) {
                     break;
                 }
             }
@@ -168,7 +170,7 @@
             [self addReuseItem:topCell];
             [self.visibleViewCells removeObject:topCell];
             while (nextTag < allCount) {
-                [self hhh:nextTag];
+                [self getReuseCell:nextTag];
                 nextTag++;
                 if (lastMaxXOffSet > offSet + SCREEN_WIDTH ) {
                     break;
@@ -181,10 +183,11 @@
         return view1.tag > view2.tag;
     }];
 }
-- (void)hhh:(NSInteger)nextTag{
+- (void)getReuseCell:(NSInteger)nextTag{
     //去重用池获取重用的cell,没有的话，创建重用cell
     ViewCell *cell = [self.xzfDataSource xzfTableview:self cellForRowAtIndex:nextTag];
     cell.tag = nextTag;
+    cell.cellDelegate = self;
     cell.frame = CGRectMake(nextTag * viewSize.width, 0, viewSize.width, viewSize.height);
     cell.viewSize = viewSize;
 
@@ -198,15 +201,19 @@
     }
 
 }
-- (BOOL)isCanReuse:(ViewCell *)cell{
+//取消选中一条
+- (void)deselectRowAtIndexPath:(NSInteger)index animated:(BOOL)animated{
     
-    CGRect rect =  CGRectMake(self.contentOffset.x, 0,CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
+    if (self.xzfDelegate &&[self.xzfDelegate respondsToSelector:@selector(tableView:didDeselectRowAtIndex:)]) {
+        [self.xzfDelegate tableView:self didDeselectRowAtIndex:index];
+    }
     
-    if (CGRectIsNull(CGRectIntersection(cell.frame,rect))) {//无交集,可进行重用。
-        return YES;
-        
-    }else{//有交集,不能进行重用。
-        return NO;
+}
+#pragma mark - CellDelegate //点击选中一条
+- (void)selectCurrentCell:(NSInteger)index{
+    
+    if (self.xzfDelegate &&[self.xzfDelegate respondsToSelector:@selector(tableView:didSelectRowAtIndex:)]) {
+        [self.xzfDelegate tableView:self didSelectRowAtIndex:index];
     }
     
 }

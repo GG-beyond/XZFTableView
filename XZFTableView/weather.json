@@ -1,0 +1,156 @@
+{
+    "data": {
+        "yesterday": {
+            "date": "26日",
+            "week": "星期五",
+            "high": "31℃",
+            "fengxiang": "南风",
+            "low": "17℃",
+            "fengli": "微风",
+            "type": "晴"
+        },
+        "city": "北京",
+        "aqi": "83",
+        "forecast": [
+                     {
+                     "date": "27日",
+                     "week": "星期六",
+                     "high": "34℃",
+                     "fengli": "微风级",
+                     "low": "21℃",
+                     "fengxiang": "西南风",
+                     "type": "晴"
+                     },
+                     {
+                     "date": "28日",
+                     "week": "星期日",
+                     "high": "36℃",
+                     "fengli": "3-4级",
+                     "low": "22℃",
+                     "fengxiang": "北风",
+                     "type": "多云"
+                     },
+                     {
+                     "date": "29日",
+                     "week": "星期一",
+                     "high": "29℃",
+                     "fengli": "微风级",
+                     "low": "18℃",
+                     "fengxiang": "东风",
+                     "type": "阴"
+                     },
+                     {
+                     "date": "30日",
+                     "week": "星期二",
+                     "high": "30℃",
+                     "fengli": "微风级",
+                     "low": "18℃",
+                     "fengxiang": "南风",
+                     "type": "阴"
+                     },
+                     {
+                     "date": "31日",
+                     "week": "星期三",
+                     "high": "32℃",
+                     "fengli": "3-4级",
+                     "low": "20℃",
+                     "fengxiang": "南风",
+                     "type": "多云"
+                     },
+                     {
+                     "date": "1日",
+                     "week": "星期四",
+                     "high": "33℃",
+                     "fengli": "3-4级",
+                     "low": "27℃",
+                     "fengxiang": "南风",
+                     "type": "多云"
+                     },
+                     {
+                     "date": "2日",
+                     "week": "星期五",
+                     "high": "34℃",
+                     "fengli": "2-3级",
+                     "low": "25℃",
+                     "fengxiang": "南风",
+                     "type": "多云"
+                     },
+                     {
+                     "date": "3日",
+                     "week": "星期六",
+                     "high": "30℃",
+                     "fengli": "3-4级",
+                     "low": "22℃",
+                     "fengxiang": "南风",
+                     "type": "多云"
+                     },
+                     {
+                     "date": "4日",
+                     "week": "星期日",
+                     "high": "32℃",
+                     "fengli": "3-4级",
+                     "low": "20℃",
+                     "fengxiang": "南风",
+                     "type": "多云"
+                     },
+                     {
+                     "date": "5日",
+                     "week": "星期一",
+                     "high": "32℃",
+                     "fengli": "3-4级",
+                     "low": "20℃",
+                     "fengxiang": "南风",
+                     "type": "多云"
+                     },
+                     {
+                     "date": "6日",
+                     "week": "星期二",
+                     "high": "32℃",
+                     "fengli": "3-4级",
+                     "low": "20℃",
+                     "fengxiang": "南风",
+                     "type": "多云"
+                     },
+                     {
+                     "date": "7日",
+                     "week": "星期三",
+                     "high": "29℃",
+                     "fengli": "3-4级",
+                     "low": "18℃",
+                     "fengxiang": "南风",
+                     "type": "小雨"
+                     },
+                     {
+                     "date": "8日",
+                     "week": "星期四",
+                     "high": "29℃",
+                     "fengli": "3-4级",
+                     "low": "19℃",
+                     "fengxiang": "南风",
+                     "type": "小雨"
+                     },
+                     {
+                     "date": "9日",
+                     "week": "星期五",
+                     "high": "32℃",
+                     "fengli": "3-4级",
+                     "low": "25℃",
+                     "fengxiang": "南风",
+                     "type": "多云"
+                     },
+                     {
+                     "date": "10日",
+                     "week": "星期六",
+                     "high": "33℃",
+                     "fengli": "3-4级",
+                     "low": "22℃",
+                     "fengxiang": "南风",
+                     "type": "多云"
+                     }
+                     ],
+        "ganmao": "各项气象条件适宜，发生感冒机率较低。但请避免长期处于空调房间中，以防感冒。",
+        "wendu": "27"
+    },
+    "status": "200",
+    "message": "OK"
+}

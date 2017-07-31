@@ -7,12 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol CellDelegate <NSObject>
 
+- (void)selectCurrentCell:(NSInteger)index;
+@end
 @interface ViewCell : UIView
 @property (nonatomic, strong) NSString *indentifier;
 @property (nonatomic, strong) UIView *selectedBackgroundView;//cell选中时的view
 @property (nonatomic, getter=isSelected) BOOL selected;//选中
 @property (nonatomic, getter=isHighlighted) BOOL highlighted; //高亮
 @property (nonatomic, assign) CGSize viewSize;
+@property (nonatomic, weak) id<CellDelegate> cellDelegate;
+
 - (id)initWithIndentifier:(NSString *)indentifier;
 @end
