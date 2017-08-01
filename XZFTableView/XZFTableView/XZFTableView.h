@@ -36,7 +36,7 @@ typedef enum ScrollDirection {
 - (void)tableView:(XZFTableView *)tableView didSelectRowAtIndex:(NSInteger)index;//选中
 - (void)tableView:(XZFTableView *)tableView didDeselectRowAtIndex:(NSInteger)index;
 - (void)xzfTableViewDidScroll:(XZFTableView *)tableView;
-
+- (BOOL)xzfTableView:(XZFTableView *)zxfTableView canEditRowAtIndexPath:(NSInteger)index;
 
 @end
 @interface XZFTableView : UIScrollView<UIScrollViewDelegate>
@@ -45,11 +45,16 @@ typedef enum ScrollDirection {
 @property (nonatomic, strong) NSMutableArray *visibleViewCells;//可见的cell数组
 @property (nonatomic, strong) NSMutableSet *reuseableViewCells;//重用的cell集合
 @property (nonatomic, assign) ScrollDirection sDirection;//滑动方向
+@property (nonatomic, assign) BOOL isEdit;//编辑
 
 /*
     重用机制
  */
 - (__kindof ViewCell *)dequeueReusableCardViewWithIdentifier:(NSString *)identifier;
+/*
+    获取指定的cell
+ */
+- (__kindof ViewCell *)cellForItemAtIndex:(NSInteger)index;
 /*
     刷新数据
  */

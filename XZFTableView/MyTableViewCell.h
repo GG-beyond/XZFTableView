@@ -18,5 +18,5 @@
 @property (nonatomic, strong) UILabel *low;//最低温度
 @property (nonatomic, strong) UIImageView *cornerMarkImageView;//编辑角标（目前不可点击）
 
-
+- (void)fillinInfo:(NSDictionary *)info;
 @end

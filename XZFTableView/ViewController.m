@@ -9,9 +9,13 @@
 #import "ViewController.h"
 #import "XZFTableView.h"
 #import "MyTableViewCell.h"
-@interface ViewController ()<UIXZFTableViewDelegate,UIXZFTableViewDataSource>
+@interface ViewController ()<UIXZFTableViewDelegate,UIXZFTableViewDataSource,UIGestureRecognizerDelegate>
 @property (nonatomic, strong) XZFTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, strong) UIView *snapShotView;
+@property (nonatomic, strong) UIView *originView;
+
+@property (nonatomic, assign) CGRect snapFrame;
 
 @end
 
@@ -21,7 +25,10 @@
     
     [super viewDidLoad];
     [self.view addSubview:self.tableView];
+
+    
 }
+
 - (XZFTableView *)tableView{
     if (!_tableView) {
         _tableView = [[XZFTableView alloc]initWithFrame:CGRectMake(0, 100, SCREEN_WIDTH, 300)];
@@ -58,24 +65,31 @@
     if (!cell) {
         cell = [[MyTableViewCell alloc] initWithIndentifier:indentifier];
     }
-
-//    cell.appName.text = [NSString stringWithFormat:@"%ld",index];
+    [cell fillinInfo:self.dataSource[index]];
     return cell;
 }
 #pragma mark - Delegate
 - (CGSize)tableView:(XZFTableView *)tableView{
-    //宽度：自己设置
-    //高度：自己获取控件的高度
+    /*
+     宽度：自己设置
+     高度：获取控件的高度
+    */
     return CGSizeMake(100, CGRectGetHeight(self.tableView.frame));
     
 }
 - (void)tableView:(XZFTableView *)tableView didSelectRowAtIndex:(NSInteger)index{
+    
+//    MyTableViewCell *cell = [tableView cellForItemAtIndex:index];
+//    [self addCopyView:cell];
+//    return;
     [tableView deselectRowAtIndexPath:index animated:YES];
 }
 - (void)tableView:(XZFTableView *)tableView didDeselectRowAtIndex:(NSInteger)index{
     
     
 }
+#pragma mark - 模仿qq发图片，选择图片时角标
+
 //模仿qq发图片，选择图片时角标
 - (void)xzfTableViewDidScroll:(XZFTableView *)tableView{
     
@@ -94,9 +108,79 @@
             cell.cornerMarkImageView.frame = CGRectMake(MAX(offSet - cellMinOffSet-20-5, 0), 5, 20, 20);
             
         }
+    }
+}
+#pragma mark - 用于模仿qq发图片
+/*
+ 1、实现xzfTableView可编辑的代理，即返回Bool = YES
+ 2、选中某个cell
+ 3、
+ */
+- (void)addCopyView:(UIView *)copyView{
+    
+    self.originView = copyView;
+    UIView *snapShotView = [copyView snapshotViewAfterScreenUpdates:NO];//截图
+    CGRect re = [self.view convertRect:copyView.frame fromView:copyView.superview];
+    re.origin.y = re.origin.y;
+    snapShotView.frame = re;
+    self.snapFrame = re;
+    self.snapShotView = snapShotView;
+    [self.view addSubview:snapShotView];
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(doPan:)];
+    [self.tableView.panGestureRecognizer requireGestureRecognizerToFail:pan];
+    pan.delegate = self;
+    copyView.hidden = YES;
+    [snapShotView addGestureRecognizer:pan];
+    
+}
+- (void)doPan:(UIPanGestureRecognizer *)pan{
+    
+
+    if (pan.state == UIGestureRecognizerStateBegan) {
         
+        
+    }else if (pan.state == UIGestureRecognizerStateChanged){
+        
+        CGPoint translation = [pan translationInView:self.view];
+        CGPoint newCenter = CGPointMake(pan.view.center.x,pan.view.center.y +translation.y);//    限制屏幕范围：
+        pan.view.center = newCenter;
+        [pan setTranslation:CGPointZero inView:self.view];
+
+        
+    }else if (pan.state == UIGestureRecognizerStateEnded || pan.state ==UIGestureRecognizerStateCancelled){
+        
+        [UIView animateWithDuration:1.0
+                              delay:0.0
+             usingSpringWithDamping:0.5
+              initialSpringVelocity:0
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             
+                             pan.view.frame = self.snapFrame;
+                             
+                         } completion:^(BOOL finished) {
+                             if (finished) {
+                                 self.originView.hidden = NO;
+                                 [self.snapShotView removeFromSuperview];
+                                 self.snapShotView = nil;
+                             }
+                         }];
     }
     
+    
+}
+-(BOOL)gestureRecognizer:(UIGestureRecognizer*) gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer*)otherGestureRecognizer
+{
+    if ([gestureRecognizer.view isKindOfClass:[MyTableViewCell class]]) {
+        
+        return NO;
+        
+    }
+    else {
+        
+        return YES;
+        
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

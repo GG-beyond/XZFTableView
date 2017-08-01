@@ -49,12 +49,14 @@
     _defalutColor = selectedBackgroundView.backgroundColor;
 
 }
-- (void)setViewSize:(CGSize)viewSize{
-    _viewSize = viewSize;
-    self.bgControl.frame = CGRectMake(0, 0, viewSize.width, viewSize.height);
-    UIImage *image = [self createImageWithBgColor:_defalutColor size:_bgControl.bounds.size ];
-    [_bgControl setImage:image forState:UIControlStateHighlighted];
-    [_bgControl setImage:image forState:UIControlStateSelected];
+- (void)setFrame:(CGRect)frame{
+    [super setFrame:frame];
+    if (!CGRectEqualToRect(frame,CGRectZero)) {//如果不判断，控制台会打印一堆错误信息
+        self.bgControl.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+        UIImage *image = [self createImageWithBgColor:_defalutColor size:_bgControl.bounds.size ];
+        [_bgControl setImage:image forState:UIControlStateHighlighted];
+        [_bgControl setImage:image forState:UIControlStateSelected];
+    }
 
 }
 - (void)setSelected:(BOOL)selected{
@@ -80,7 +82,7 @@
 - (void)doSelect:(UIButton *)sender{
     NSLog(@"%ld",self.tag);
     if (self.cellDelegate && [self.cellDelegate respondsToSelector:@selector(selectCurrentCell:)]) {
-        [self.cellDelegate selectCurrentCell:sender.tag];
+        [self.cellDelegate selectCurrentCell:self.tag ];
     }
 }
 @end

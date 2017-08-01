@@ -15,12 +15,13 @@
     NSInteger allCount;
 
 }
+
 @end
 @implementation XZFTableView
 - (instancetype)initWithFrame:(CGRect)frame{
     
     if (self = [super initWithFrame:frame]) {
-        
+
         self.showsHorizontalScrollIndicator=NO;
         self.showsVerticalScrollIndicator=NO;
         self.directionalLockEnabled = YES;
@@ -28,12 +29,14 @@
         self.delaysContentTouches = NO;
         self.canCancelContentTouches = YES;
         self.backgroundColor = [UIColor blueColor];
+        self.layer.masksToBounds = NO;
         self.visibleViewCells = [NSMutableArray array];
         self.reuseableViewCells = [NSMutableSet set];
         
     }
     return self;
 }
+
 - (BOOL)touchesShouldCancelInContentView:(UIView *)view {
     
     if ([view isKindOfClass:[UIControl class]]) {
@@ -66,6 +69,17 @@
     }
     return nil;
 }
+// returns nil if cell is not visible or index is out of range
+- (__kindof ViewCell *)cellForItemAtIndex:(NSInteger)index{
+    
+    ViewCell *cell = [self viewWithTag:index];
+    if (cell && [self.visibleViewCells containsObject:cell]) {
+        return cell;
+    }else{
+        return nil;
+    }
+    
+}
 - (void)reloadData{
     
     //获取总个数
@@ -92,7 +106,7 @@
             [self.visibleViewCells addObject:cell];
             cell.tag = i;
             cell.cellDelegate = self;
-            cell.viewSize = viewSize;
+//            cell.viewSize = viewSize;
             cell.frame = CGRectMake(i*viewSize.width, 0, viewSize.width, viewSize.height);
             
         }
@@ -189,7 +203,6 @@
     cell.tag = nextTag;
     cell.cellDelegate = self;
     cell.frame = CGRectMake(nextTag * viewSize.width, 0, viewSize.width, viewSize.height);
-    cell.viewSize = viewSize;
 
     //
     if (![self.subviews containsObject:cell]) {
@@ -212,6 +225,7 @@
 #pragma mark - CellDelegate //点击选中一条
 - (void)selectCurrentCell:(NSInteger)index{
     
+    
     if (self.xzfDelegate &&[self.xzfDelegate respondsToSelector:@selector(tableView:didSelectRowAtIndex:)]) {
         [self.xzfDelegate tableView:self didSelectRowAtIndex:index];
     }
@@ -225,4 +239,5 @@
 - (void)setXzfDelegate:(id<UIXZFTableViewDelegate>)xzfDelegate{
     _xzfDelegate = xzfDelegate;
 }
+
 @end
